@@ -1,7 +1,7 @@
-import { ScrollView, Text, View } from 'react-native';
+import { ScrollView } from 'react-native';
 
 const AboutScreen = () => {
-  return <ScrollView> </ScrollView>;
+  return <ScrollView></ScrollView>;
 };
 
 export default AboutScreen;
