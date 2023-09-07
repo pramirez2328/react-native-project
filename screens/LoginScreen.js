@@ -148,8 +148,22 @@ const RegisterTab = () => {
       ],
       { format: ImageManipulator.SaveFormat.PNG }
     );
-    console.log('testing', processedImage);
+    console.log(processedImage);
     setImageUrl(processedImage.uri);
+  };
+
+  const getImageFromGallery = async () => {
+    let mediaLibraryPermissions = await ImagePicker.requestCameraPermissionsAsync();
+    if (mediaLibraryPermissions.status === 'granted') {
+      const capturedImage = await ImagePicker.launchImageLibraryAsync({
+        allowsEditing: true,
+        aspect: [1, 1],
+      });
+      if (capturedImage.assets) {
+        console.log(capturedImage.assets[0]);
+        processImage(capturedImage.assets[0].uri);
+      }
+    }
   };
 
   return (
@@ -158,7 +172,9 @@ const RegisterTab = () => {
         <View style={styles.imageContainer}>
           <Image source={{ uri: imageUrl }} loadingIndicatorSource={logo} style={styles.image} />
           <Button title='Camera' onPress={getImageFromCamera} />
+          <Button title='Gallery' onPress={getImageFromGallery} />
         </View>
+
         <Input
           placeholder='Username'
           leftIcon={{ type: 'font-awesome', name: 'user-o' }}
